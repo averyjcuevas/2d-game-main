@@ -26,9 +26,12 @@ func attack():
 	animations.play("attack" + lastAnimDirection)
 	isAttacking = true
 	weapon.visible = true
+	weapon.enable()  # Enable sword hitbox when attacking
 	await animations.animation_finished
+	weapon.disable()  # Disable sword hitbox after the attack
 	weapon.visible = false
 	isAttacking = false
+
 		
 func updateAnimation():
 	if isAttacking: return

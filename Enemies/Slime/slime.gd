@@ -7,7 +7,6 @@ extends CharacterBody2D
 @onready var animations = $AnimationPlayer
 var startPos
 var endPos
-
 var isDead: bool = false
 
 func _ready():
@@ -37,7 +36,6 @@ func updateAnimation():
 	
 		animations.play("walk" + direction)
 
-
 func _physics_process(delta):
 	if isDead: return
 	
@@ -45,9 +43,14 @@ func _physics_process(delta):
 	move_and_slide()
 	updateAnimation()
 
-
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if area == $hitBox: return
+	print("Slime hit by:", area.name)  # Debugging: Check what hit the slime
+
+	if not area.is_in_group("player_attack"): 
+		print("Not a valid attack, ignoring")
+		return  # Ignore everything except attacks
+
+	print("Valid attack detected!")  # Debugging: Confirm attack is valid
 	isDead = true
 	animations.play("death")
 	await animations.animation_finished
