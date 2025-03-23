@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://gw4gqnhnc3sb"]
+
+[ext_resource type="PackedScene" uid="uid://ny84vuu7csty" path="res://Collectable/collectable.tscn" id="1_mji4e"]
+[ext_resource type="Script" uid="uid://bw5obinptofbj" path="res://Collectable/Sword/sword.gd" id="2_lsaoa"]
+[ext_resource type="Texture2D" uid="uid://beugri18kns5c" path="res://Art/Ninja Adventure - Asset Pack/Ninja Adventure - Asset Pack/Items/Weapons/Sword2/Sprite.png" id="2_pimjl"]
+[ext_resource type="Resource" uid="uid://bjyy82baeiwbg" path="res://Inventory/Items/Sword.tres" id="3_3kgaw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsaoa"]
+resource_local_to_scene = true
+size = Vector2(6, 16)
+
+[sub_resource type="Animation" id="Animation_a36ua"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4qrrv"]
+resource_name = "spin"
+length = 0.3
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aj0ve"]
+_data = {
+&"RESET": SubResource("Animation_a36ua"),
+&"spin": SubResource("Animation_4qrrv")
+}
+
+[node name="Sword" instance=ExtResource("1_mji4e")]
+script = ExtResource("2_lsaoa")
+itemRes = ExtResource("3_3kgaw")
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_lsaoa")
+
+[node name="Sprite2D" parent="." index="1"]
+position = Vector2(0, -8)
+texture = ExtResource("2_pimjl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_aj0ve")
+}

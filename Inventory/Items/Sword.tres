@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bjyy82baeiwbg"]
+
+[ext_resource type="Script" uid="uid://c6jl38k3kyyj" path="res://Inventory/InventoryItem.gd" id="1_qdm23"]
+[ext_resource type="Texture2D" uid="uid://beugri18kns5c" path="res://Art/Ninja Adventure - Asset Pack/Ninja Adventure - Asset Pack/Items/Weapons/Sword2/Sprite.png" id="2_gkm07"]
+
+[resource]
+script = ExtResource("1_qdm23")
+name = "Sword"
+texture = ExtResource("2_gkm07")
+metadata/_custom_type_script = "uid://c6jl38k3kyyj"
