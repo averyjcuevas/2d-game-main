@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var endPoint: Marker2D
 
 @onready var animations = $AnimationPlayer
+@onready var poofSound = $Poof # Reference to the Poof sound
+
 var startPos
 var endPos
 var isDead: bool = false
@@ -44,7 +46,7 @@ func _physics_process(delta):
 	updateAnimation()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("Skeleton hit by:", area.name)  # Debugging: Check what hit the slime
+	print("Skeleton hit by:", area.name)  # Debugging: Check what hit the skeleton
 
 	if not area.is_in_group("player_attack"): 
 		print("Not a valid attack, ignoring")
@@ -53,5 +55,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	print("Valid attack detected!")  # Debugging: Confirm attack is valid
 	isDead = true
 	animations.play("death")
+
+	# Play the "poof" sound effect when the skeleton dies
+	poofSound.play()
+
 	await animations.animation_finished
 	queue_free()

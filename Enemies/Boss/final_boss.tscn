@@ -143,28 +143,12 @@ animations = [{
 radius = 5.0
 height = 16.0
 
-[sub_resource type="Animation" id="Animation_fnbn4"]
-resource_name = "death"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Hurtbox/deathEffect:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-
 [sub_resource type="Animation" id="Animation_aii47"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hurtbox/deathEffect:frame")
+tracks/0/path = NodePath("deathEffect:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -172,6 +156,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fnbn4"]
+resource_name = "death"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("deathEffect:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sy5ws"]
@@ -217,9 +217,11 @@ collision_mask = 4
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_gvf55")
 
-[node name="deathEffect" type="Sprite2D" parent="Hurtbox"]
+[node name="deathEffect" type="Sprite2D" parent="."]
 position = Vector2(0, -11)
 texture = ExtResource("3_gvf55")
 hframes = 6
+
+[node name="Poof" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

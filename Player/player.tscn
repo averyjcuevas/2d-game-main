@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://crhi7te13gxj5"]
+[gd_scene load_steps=19 format=3 uid="uid://crhi7te13gxj5"]
 
 [ext_resource type="Script" uid="uid://7hluqaku3wkr" path="res://Player/player.gd" id="1_onrkg"]
 [ext_resource type="Resource" uid="uid://c4u3hnish2u04" path="res://Inventory/playerInventory.tres" id="2_btcbx"]
 [ext_resource type="Texture2D" uid="uid://dk50adqinjofu" path="res://Art/Ninja Adventure - Asset Pack/Ninja Adventure - Asset Pack/Actor/Characters/Knight/player_sprites.png.png" id="2_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://dffnbbb8lqdn5" path="res://sword.tscn" id="4_gwnis"]
 [ext_resource type="Script" uid="uid://xnj15pipbgly" path="res://Player/weapons.gd" id="4_k53q1"]
+[ext_resource type="AudioStream" uid="uid://csxb80be80bx0" path="res://sword-sound-2-36274.mp3" id="6_fhl08"]
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
@@ -234,8 +235,7 @@ height = 16.0
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
-collision_layer = 7
-collision_mask = 7
+collision_mask = 4
 script = ExtResource("1_onrkg")
 inventory = ExtResource("2_btcbx")
 
@@ -255,7 +255,7 @@ position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_4ntmi")
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_mask = 3
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -7)
@@ -269,5 +269,8 @@ script = ExtResource("4_k53q1")
 [node name="sword" parent="weapons" instance=ExtResource("4_gwnis")]
 position = Vector2(0, 9.53674e-07)
 rotation = -2.68955
+
+[node name="SwordSlash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_fhl08")
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
