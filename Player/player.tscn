@@ -234,6 +234,8 @@ height = 16.0
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_onrkg")
 inventory = ExtResource("2_btcbx")
 

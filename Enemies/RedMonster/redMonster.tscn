@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://6ravqmo2k8i6"]
+[gd_scene load_steps=27 format=3 uid="uid://6ravqmo2k8i6"]
 
 [ext_resource type="Script" uid="uid://b0ip5a1ij5gwo" path="res://Enemies/RedMonster/redMonster.gd" id="1_ef1bt"]
 [ext_resource type="Texture2D" uid="uid://6rnduptmy7oy" path="res://Art/Ninja Adventure - Asset Pack/Ninja Adventure - Asset Pack/Actor/Monsters/Cyclope/SpriteSheet.png" id="2_sqlyq"]
+[ext_resource type="Texture2D" uid="uid://cnfasgo5cr42f" path="res://Art/Ninja Adventure - Asset Pack/Ninja Adventure - Asset Pack/FX/Smoke/Smoke/SpriteSheet.png" id="3_sqlyq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wxkp7"]
 atlas = ExtResource("2_sqlyq")
@@ -142,14 +143,85 @@ animations = [{
 radius = 7.0
 height = 16.0
 
+[sub_resource type="Animation" id="Animation_wxkp7"]
+resource_name = "death"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("deathEffect:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 4]
+}
+
+[sub_resource type="Animation" id="Animation_p74l2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("deathEffect:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3buba"]
+_data = {
+&"RESET": SubResource("Animation_p74l2"),
+&"death": SubResource("Animation_wxkp7")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ef1bt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sqlyq"]
+
 [node name="Monster" type="CharacterBody2D"]
 script = ExtResource("1_ef1bt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_agc0e")
-animation = &"walkRight"
+animation = &"walkDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_ef1bt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3buba")
+}
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_ef1bt")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_sqlyq")
+
+[node name="deathEffect" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+texture = ExtResource("3_sqlyq")
+hframes = 6
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
